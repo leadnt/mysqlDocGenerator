@@ -71,19 +71,20 @@ public class DocFactory {
 
         List<Table> tables = dataUtil.queryTables(url+db, user, pwd);
         int sheetrow = 0;
-        excel.setCellValue(sheet, sheetrow, 0, "操作", titleStyle);
+        excel.setCellValue(sheet, sheetrow, 0, "序号", titleStyle);
         excel.setCellValue(sheet, sheetrow, 1, "表名", titleStyle);
         excel.setCellValue(sheet, sheetrow, 2, "说明", titleStyle);
-
+        int index =1;
         for (Table table : tables) {
             sheetrow++;
-            excel.setCellLinkValue(sheet, sheetrow, 0, "打开", table.getName() + "!A1");
+            excel.setCellLinkValue(sheet, sheetrow, 0, String.valueOf(index), table.getName() + "!A1");
             excel.setCellStyle(sheet, sheetrow, 0, defaultStyle);
 
             excel.setCellValue(sheet, sheetrow, 1, table.getName(), defaultStyle);
             excel.setCellValue(sheet, sheetrow, 2, table.getComment(), defaultStyle);
 
             generatorTable(table);
+            index++;
         }
         excel.save(db + ".xls");
 
